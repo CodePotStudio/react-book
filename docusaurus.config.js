@@ -15,7 +15,6 @@ module.exports = {
 				src: "img/black-logo.svg",
 			},
 			items: [
-				{ to: "blog", label: "커리큘럼", position: "left" },
 				{
 					to: "docs/",
 					activeBasePath: "docs",

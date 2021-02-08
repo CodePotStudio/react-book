@@ -1,6 +1,6 @@
 module.exports = {
-	title: "My Site",
-	tagline: "The tagline of my site",
+	title: "{React 개발에서 배포까지}",
+	tagline: "8주 만에 나만의 성향 테스트 만들기",
 	url: "https://your-docusaurus-test-site.com",
 	baseUrl: "/",
 	onBrokenLinks: "throw",
@@ -31,7 +31,7 @@ module.exports = {
 		},
 		footer: {
 			style: "dark",
-			copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+			copyright: `Copyright © ${new Date().getFullYear()} Code Pot, Built with Docusaurus.`,
 		},
 	},
 	presets: [

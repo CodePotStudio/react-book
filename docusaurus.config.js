@@ -6,7 +6,10 @@ module.exports = {
 	onBrokenLinks: "throw",
 	onBrokenMarkdownLinks: "warn",
 	favicon: "img/favicon.ico",
-	organizationName: "code pot,", // Usually your GitHub org/user name.
+	url: "https://CodePotStudio.github.io", // Your website URL
+	baseUrl: "/",
+	projectName: "CodePotStudio.github.io",
+	organizationName: "CodePotStudio",
 	projectName: "code-pot/react-class", // Usually your repo name.
 	themeConfig: {
 		navbar: {

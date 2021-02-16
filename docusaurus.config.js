@@ -6,11 +6,11 @@ module.exports = {
 	onBrokenLinks: "throw",
 	onBrokenMarkdownLinks: "warn",
 	favicon: "img/favicon.ico",
-	url: "https://CodePotStudio.github.io", // Your website URL
+	url: "https://code-pot-react.netlify.com", // Url to your site with no trailing slash
 	baseUrl: "/",
 	projectName: "CodePotStudio.github.io",
 	organizationName: "CodePotStudio",
-	projectName: "code-pot/react-class", // Usually your repo name.
+	projectName: "react-book", // Usually your repo name.
 	themeConfig: {
 		navbar: {
 			logo: {

@@ -12,6 +12,7 @@ module.exports = {
 	organizationName: "CodePot Company",
 	projectName: "react-book", // Usually your repo name.
 	themeConfig: {
+		image: "img/og_image.png",
 		navbar: {
 			logo: {
 				alt: "My Site Logo",

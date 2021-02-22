@@ -10,6 +10,15 @@ module.exports = {
 			"week01/doc7",
 			"week01/doc8",
 		],
-		"퀴즈 앱 배포하기 (2주차)": [],
+		"퀴즈 앱 배포하기 (2주차)": [
+			"week02/doc1",
+			"week02/doc2",
+			"week02/doc3",
+			"week02/doc4",
+			"week02/doc5",
+			"week02/doc6",
+			"week02/doc7",
+			"week02/doc8",
+		],
 	},
 };

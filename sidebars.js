@@ -20,5 +20,6 @@ module.exports = {
 			"week02/doc7",
 			"week02/doc8",
 		],
+		"페이지, 컴포넌트 분리하기 (3주차)": ["week03/doc1"],
 	},
 };

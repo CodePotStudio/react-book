@@ -132,13 +132,13 @@ function App(){
 ```jsx
 // App.js
 function App(){
-	const convertedScore = parseInt(score/quizzes.length * 100);
+	const convertedScore = Math.floor((score / quizzes.length) * 100);
 	...
 	return <div className="container">
 			{showResult ? (
 				<div className="app">
-					<h1 class="result-header">당신의 점수는?</h1>
-					<p class="result-score">{convertedScore}</p>
+					<h1 className="result-header">당신의 점수는?</h1>
+					<p className="result-score">{convertedScore}</p>
 				</div>
 			) : (
 				<div className="app">
@@ -183,7 +183,7 @@ App.css
 ...
 ```
 
-0~100점으로 스코어를 표현하기 위해 `parseInt` 를 활용하여 소수점 이하 자리를 버려주었습니다. 그리고 결과를 보여주는 자리에 변환된 점수(`convertedScore`)를 추가해 주었습니다. 뿐만 아니라 결과 페이지에 스타일을 조금 추가하였습니다.
+0~100점으로 스코어를 표현하기 위해 `Math.floor` 를 활용하여 소수점 이하 자리를 버려주었습니다. 그리고 결과를 보여주는 자리에 변환된 점수(`convertedScore`)를 추가해 주었습니다. 뿐만 아니라 결과 페이지에 스타일을 조금 추가하였습니다.
 
 그럼 실행해 보도록 하겠습니다.
 ![2-11.gif](./assets/2-11.gif)

@@ -1,28 +1,260 @@
 ---
-title: 컴포넌트 더!더!더! 분리하기
-sidebar_label: 컴포넌트 더!더!더! 분리하기
+title: 컴포넌트에 스타일 입히기 (고급)
+sidebar_label: 컴포넌트에 스타일 입히기 (고급)
 id: doc4
 ---
 
-이제 컴포넌트를 분리하는 방법을 배웠으니, 좀 더 적극적으로 컴포넌트를 분리해보도록 하겠습니다.
+## CSS Module (Class 이름을 유일하게 만들기)
+
+아까의 문제는 `class` 이름이 범용적이라 겹치는 이름이 생겨서 생기는 문제였습니다. 그렇다면 `class` 이름을 고유하게 만들면 문제가 해결되지 않을까요?
+
+그러한 컨셉으로 나온 것이 바로 `CSS Module` 입니다.
+
+사용하는 방법은 `CSS` 파일 이름 앞에 `module`을 붙여주면 됩니다.
+
+아까 `Button.css` 파일을 `Button.module.css`로 이름을 바꿔 보도록 하겠습니다.
 
 ```jsx
-// App.js
+// components/Button/Button.module.css
+.answer {
+	font-size: 16px;
+	color: #ffffff;
+	background-color: #7362ff;
+	border-radius: 5px;
+	border: 0px;
+	height: 56px;
+	padding: 4px;
+	margin: 4px;
+	cursor: pointer;
+	width: 100%;
+	outline: none;
+	font-weight: 700;
+	&:hover {
+		background-color: #a99fee;
+	}
+}
+```
+
+```jsx
+// components/Button/index.js
+
+import React from "react";
+import styles from "./Button.module.css";
+
+const Button = (props) => (
+	<button className={styles.answer} onClick={props.onClick}>
+		{props.text}
+	</button>
+);
+export default Button;
+```
+
+몇 가지 바뀐 점이 있는데 `css.module`을 사용할 때는 `CSS`를 `import`하여 그곳에 있는 `class`를 직접 입력해 주어야 한다는 것입니다. 위에 코드를 보면 `import styles from "./Button.module.css";` 로 `css`를 `import` 해온 뒤, `className={styles.answer}` 클래스에 적용한 것을 볼 수 있습니다.
+
+위와 같이 코드를 바꾸고 재실행 해보도록 하겠습니다.
+
+![2-09.png](./assets/2-09.png)
+
+위의 화면 처럼 class에 **Button_answer\_\_1La8T** 처럼 고유한 `hash` 값이 `class`마다 붙은 것을 알 수 있습니다. 이로 인해 다른 곳에서 다른 곳에서 동일한 이름으로 사용할 수 없게 됩니다. 👏👏👏
+
+## CSS in Javascript (Props로 CSS 관리하기)
+
+`CSS Module` 의 경우, 몇 가지 단점이 있습니다.
+
+**모든 컴포넌트에 변수를 공유하기가 어렵습니다.** 예를 들어 웹 페이지의 컬러의 경우 어느 컴포넌트에서나 사용되어야 하는 속성이기에 모든 컴포넌트가 공유할 수 있어야 합니다. 그런데 `CSS module` 단독으로는 어렵습니다.
+그래서 이 단점을 극복하기 위해 `Sass`, `Scss` 같은 기술을 사용합니다.
+
+또한 **`css`로 원하는 속성를 넘겨주기가 번거롭습니다.** 즉 컴포넌트의 속성에 따라 동적으로 `style`을 변경시키기에 어려움이 있습니다.
+
+이를 손쉽게 해결하기 위해 나온 것이 `CSS in Javascript` 입니다. 대표적인 것으로 `styled-component,` `emotion`이 있으며, 저희는 `styled-component`를 활용해서 `Button` 컴포넌트를 리팩토링 해보도록 하겠습니다.
+
+### 패키지 설치하기
+
+터미널을 열고 아래 코드를 복사 붙여넣기하여 패키지를 설치합니다.
+
+```jsx
+npm install styled-components
+```
+
+### 스타일이 입혀진 Button 만들기
+
+```jsx
+// components/Button/index.js
+import styled from "styled-components";
+
+const StyledButton = styled.button`
+  font-size: 16px;
+	color: #ffffff;
+	background-color: #7362ff;
+	border-radius: 5px;
+	border: 0px;
+	height: 56px;
+	padding: 4px;
+	margin: 4px;
+	cursor: pointer;
+	width: 100%;
+	outline: none;
+	font-weight: 700;
+	&:hover {
+	  background-color: #a99fee;
+	}
+}`;
+```
+
+우선 `styled Components` 패키지에서 `styled`를 `import` 합니다. `styled` 안에는 `HTML` 태그들이 포함되어 있는데, 저희는 `button` 태그를 꾸며줄 것이기 때문에 `styled.button`로 버튼 태그만 가져옵니다. 그리고 불러온 엘리먼트 뒤에 \`\`을 붙여 줍니다. \`\` 사이에 우리가 원하는 스타일을 넣어 줍니다. 위에 적용된`style`은 기존에 `Button`컴포넌트에 적용하던`CSS`입니다.
+
+한 가지 추가된 것이 있다면, 일반 CSS에서는 hover style을 `.answer:hover`로 분리하여 사용하였다면 `styled-component`에서는 `&:hover` 형태로 같이 사용 합니다.
+
+### 우리만의 Button으로 만들기
+
+```jsx
+// components/Button/index.js
+
+const StyledButton = styled.button`
+  font-size: 16px;
+	color: #ffffff;
+	background-color: #7362ff;
+	border-radius: 5px;
+	border: 0px;
+	height: 56px;
+	padding: 4px;
+	margin: 4px;
+	cursor: pointer;
+	width: 100%;
+	outline: none;
+	font-weight: 700;
+	&:hover {
+	  background-color: #a99fee;
+	}
+}`;
+
+const Button = (props) => (
+	<StyledButton onClick={props.onClick}>{props.text}</StyledButton>
+);
+
+export default Button;
+```
+
+`style`을 적용시킨 `StyledButton` 컴포넌트를 가져와 기존에 있던 `props(onClick, text)`를 넣어 줍니다.
+
+`Styled Component`로 리팩토링을 끝냈으니, 다시 실행을 해보도록 하겠습니다.
+
+![2-06.png](./assets/2-06.png)
+
+정상적으로 잘 나오는 것을 알 수 있습니다!!
+
+### CSS에서 변수 사용하기
+
+아래와 같이 컴포넌트에서 속성으로 `fontSize`를 받고, 그에 따라 폰트 사이즈를 변경 시켜 보도록 하겠습니다. (big ⇒ 32px, default ⇒ 16px)
+
+```jsx
+// components/Button/index.js
+...
+<StyledButton onClick={props.onClick} fontSize="big">{props.text}</StyledButton>
+...
+```
+
+속성을 추가해 주었으니, `Styled Component`에서 해당 속성을 보고, 속성에 맞추어 `CSS`를 변경해주어야 합니다. 이럴 때는 아래와 같이 `template literal`을 활용하여 값으로 함수를 넣어 줍니다.
+
+```jsx
+// components/Button/index.js
+...
+const StyledButton = styled.button`
+  font-size: ${(props) => (props.fonSize === "big" ? "32px" : "16px")};
+}
+`;
+...
+```
+
+함수의 매개변수로 `props`를 받아 오고, `props`의 `fontSize`에 따라서 `32px` 혹은 `16px`을 보여 주도록 코드를 추가 하였습니다.
+
+**전체 코드**
+
+```jsx
+// components/Button/index.js
+
+import React from "react";
+import styled from "styled-components";
+
+const StyledButton = styled.button`
+  font-size: ${(props) => (props.fontSize === "big" ? "32px" : "16px")};
+	color: #ffffff;
+	background-color: #7362ff;
+	border-radius: 5px;
+	border: 0px;
+	height: 56px;
+	padding: 4px;
+	margin: 4px;
+	cursor: pointer;
+	width: 100%;
+	outline: none;
+	font-weight: 700;
+	&:hover {
+	  background-color: #a99fee;
+	}
+}
+`;
+
+const Button = (props) => (
+	<StyledButton onClick={props.onClick} size="big">
+		{props.text}
+	</StyledButton>
+);
+export default Button;
+```
+
+그럼 다시 실행해 보도록 하겠습니다.
+
+![2-10.png](./assets/2-10.png)
+
+위 화면같이 버튼 폰트 사이즈가 커진 것을 확인 할 수 있습니다.
+
+그리고 `StyledButton`에서 `size` 속성을 지우고, 다시 실행하면 원래 대로 돌아 오는 것을 알 수 있습니다.
+
+```jsx
+// components/Button/index.js
+
+const Button = (props) => (
+	<StyledButton onClick={props.onClick}>{props.text}</StyledButton>
+);
+```
+
+다시 실행하면, 아래와 같이 예전의 모습으로 돌아 옵니다.
+
+![2-06.png](./assets/2-06.png)
+
+이처럼 `props`와 `styled-component`를 조합하면 다양한 사이즈, `primary`, `secondary` 버튼 등 다양하게 사용할 수 있습니다.
+
+### Theming (컴포넌트들 간에 값 공유하기)
+
+`Theming`은 다양한 컴포넌트에서 `style` 관련된 값들을 공유할 수 있도록 만든 기능입니다. 우선 공유할 값부터 정해보도록 하겠습니다.
+
+```jsx
+// theme.js
+const theme = {
+	primaryColor100: "#7362ff",
+	primaryColor80: "#a99fee",
+};
+
+export default theme;
+```
+
+위와 같이 버튼의 보라색을 `primaryColor100`에, 마우스 호버 시에 나오는 옅은 보라색을 `primaryColor80`에 저장한 `theme` 객체와 파일을 하나 만들어 주었습니다.
+
+그리고 전체 `App`에서 공유하기 위해 `App Component`에서 모든 컴포넌트를 `ThemeProvider`로 감싸 줍니다. 뿐만 아니라 `ThemeProvider`의 속성에 우리가 만든 `theme`를 값으로 넣어 줍니다.
+
+```jsx
+// components/App.js
+...
+import { ThemeProvider } from "styled-components";
+import theme from "../theme";
 
 function App() {
 	...
 	return (
 		<ThemeProvider theme={theme}>
 			<div className="container">
-				{showResult ? (
-					<div className="app">
-						...
-					</div>
-				) : (
-					<div className="app">
-						...
-					</div>
-				)}
+				...
 			</div>
 		</ThemeProvider>
 	);
@@ -31,449 +263,48 @@ function App() {
 export default App;
 ```
 
-`App` 컴포넌트에 보면 `<div className="container">`와 `<div className="App">` 이 반복적으로 사용되는 것을 알 수 있습니다. 뿐만 아니라 앞으로 페이지가 추가되면 위 코드들은 또 사용될 것이기 때문에 분리하는 것이 효과적인 것 같습니다.
-
-## Container 컴포넌트 만들기
-
-아래와 같이 `Container` 폴더를 만들고, 그 안에 `index.js`를 아래와 같이 작성합니다.
+이제 만든 `theme` 적용이 끝났고, `Button` 컴포넌트에서 `theme`에 있는 값들을 가져와 사용해 보도록 하겠습니다.
 
 ```jsx
-// components/Container/index.js
+// components/Button/index.js
 import React from "react";
 import styled from "styled-components";
 
-// App.css에서 container class에 적용되던 CSS 가져옴
-const FlexBox = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-`;
-
-// App.css에서 app class에 적용되던 CSS 가져옴
-const ContainerWrapper = styled.div`
-	width: 400px;
-	margin-top: 72px;
-`;
-
-const Container = (props) => (
-	<FlexBox>
-		<ContainerWrapper>{props.children}</ContainerWrapper>
-	</FlexBox>
-);
-export default Container;
-```
-
-여기서 `props.children`은 처음 보는 코드인데 어떤 의미인지 알아보도록 하겠습니다.
-
-### props.children
-
-예를 들어 `Box` 컴포넌트를 하나 만들었다고 생각해보겠습니다.
-
-```jsx
-// Box Component를 만듬.
-const Box = () => <div>Hello!</div>;
-```
-
-만든 컴포넌트를 `App` 컴포넌트에서 써보도록 하겠습니다. 게다가 `Box` 컴포넌트 안에는 `button` 컴포넌트도 하나 추가하였습니다.
-
-```jsx
-const App = () => {
-	return (
-				<Box>
-					<button>버튼</button>
-				</Box>
+const StyledButton = styled.button`
+  ...
+	background-color: ${(props) => props.theme.primaryColor100};
+	...
+	&:hover {
+	  background-color: ${(props) => props.theme.primaryColor80};
 	}
 }
-```
-
-그런데 이것을 실행하면 어떻게 될까요? `Hello`만 화면에 나오고 `Button`은 나오지 않습니다.
-
-무엇 때문 일까요??
-![2-11.png](./assets/2-11.png)
-
-왜냐하면 `Box` 컴포넌트는 `<div></div>` 렌더링하는 것으로 약속되어 있지 내부에 있는 컴포넌트까지 렌더링하도록 약속이 되어 있지 않기 때문입니다. 그래서 이렇게 내부의 있는 컴포넌트까지 렌더링할 때 사용하는 것이 `props.children` 입니다.
-
-다시 `Box` 컴포넌트를 수정하면 아래와 같이 해야 합니다.
-
-```jsx
-// Box Component 안에 children 컴포넌트를 렌더링 시킴.
-const Box = (props) => <div>Hello {props.children}</div>;
-```
-
-위와 같이 코드를 수정하면 정삭적으로 `Hello`와 더불어 버튼까지 같이 렌더링되는 것을 볼 수 있습니다.
-
-![2-12.png](./assets/2-12.png)
-
-### App 컴포넌트에 Container 컴포넌트 적용하기
-
-아래와 같이 코드를 변경합니다.
-
-```jsx
-// App.js
-...
-import Container from "./Container";
-
-function App() {
-	...
-	return (
-		<ThemeProvider theme={theme}>
-			{showResult ? (
-				<Container>
-					<h1 className="result-header">당신의 점수는?</h1>
-					<p className="result-score">{convertedScore}</p>
-				</Container>
-			) : (
-				<Container>
-					<div className="question-section">
-						<h1 className="question-header">
-							<span>{QUIZZES[currentNo].id}</span>/{QUIZZES.length}
-						</h1>
-						<div className="question-text">{QUIZZES[currentNo].question}</div>
-					</div>
-					<div className="answer-section">
-						{QUIZZES[currentNo].answers.map((answer) => (
-							<Button
-								text={answer.text}
-								onClick={() => handleClick(answer.isCorrect)}
-							></Button>
-						))}
-					</div>
-				</Container>
-			)}
-		</ThemeProvider>
-	);
-}
-
-export default App;
-```
-
-각 섹션 별로 컨테이너가 적용되었고, 재시작을 해보도록 하겠습니다.
-
-![2-13.png](./assets/2-13.png)
-
-정상적으로 잘 작동하는 것을 알 수 있습니다.
-
-## answerGroup 컴포넌트 만들기
-
-아래와 같이 `AnswerGroup` 폴더를 하나 만들고 `index.js`를 아래와 같이 하나 만듭니다.
-
-```jsx
-// components/AnswerGroup/index.js
-
-import React from "react";
-import styled from "styled-components";
-// QUIZZES를 사용하기 위해 import 해왔습니다.
-import { QUIZZES } from "../../constants";
-import Button from "../Button";
-
-const AnswerGroupWrapper = styled.div`
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	margin-bottom: 8px;
 `;
 
-// 비구조 할당으로 currentNo, handleClick 꺼내기
-const AnswerGroup = ({ currentNo, handleClick }) => (
-	<AnswerGroupWrapper>
-		{QUIZZES[currentNo].answers.map((answer) => (
-			<Button
-				text={answer.text}
-				onClick={() => handleClick(answer.isCorrect)}
-			></Button>
-		))}
-	</AnswerGroupWrapper>
+const Button = (props) => (
+	<StyledButton onClick={props.onClick}>{props.text}</StyledButton>
 );
-export default AnswerGroup;
+export default Button;
 ```
 
-```jsx
-//App.js
-...
-import AnswerGroup from "./AnswerGroup";
+`ThemeProvider`에서의 `theme Props`는 `ThemeProvider` 아래의 모든 컴포넌트에서 `props.theme` 로 사용할 수 있습니다.
 
-function App() {
-	...
-	return (
-		<ThemeProvider theme={theme}>
-			{showResult ? (
-				<Container>
-					<h1 className="result-header">당신의 점수는?</h1>
-					<p className="result-score">{convertedScore}</p>
-				</Container>
-			) : (
-				<Container>
-					...
-					<AnswerGroup currentNo={currentNo} handleClick={handleClick} />
-				</Container>
-			)}
-		</ThemeProvider>
-	);
-}
+그래서 위 코드처럼 각 상황에 맞추어 `primaryColor100`, `primaryColor80`으로 스타일을 적용해 주었습니다.
 
-export default App;
-```
+그럼 마찬가지로 다시 코드를 실행해 보도록 하겠습니다.
 
-`App.css`에서 `answer-section` 클래스에 적용되던 CSS를 가져와 `AnswerGroupWrapper` 컴포넌트에 적용해 주었습니다. 그리고 `AnswerGroup`의 경우, `currentNo`와 `handleClick`이 없기 때문에 `props`를 통해서 받는 형태로 추가하였습니다.
+![2-09.png](./assets/2-06.png)
 
-이로써 `AnswerGroup` 컴포넌트를 만들었고, 재시작을 해보도록 하겠습니다.
+정상적으로 잘 나오는 것을 알 수 있습니다.
 
-![2-13.png](./assets/2-13.png)
-
-정상적으로 잘 작동하는 것을 알 수 있습니다.
-
-## QuestionSection 컴포넌트 만들기
-
-아래와 같이 `QuestionSection` 폴더를 하나 만들고 `index.js`를 아래와 같이 하나 만듭니다.
-
-```jsx
-// components/QuestionSection/index.js
-
-import React from "react";
-import styled from "styled-components";
-import { QUIZZES } from "../../constants";
-
-// .question-section에 해당하는 CSS를 가져옴
-const QuestionSectionWrapper = styled.div`
-	margin-bottom: 16px;
-`;
-
-// .question-header에 해당하는 CSS를 가져옴
-const PageLabel = styled.h1`
-	font-size: 16px;
-	font-weight: bold;
-	margin-bottom: 8px;
-`;
-
-// .question-text에 해당하는 CSS를 가져옴
-const QuestionTitle = styled.div`
-	font-size: 20px;
-	margin-bottom: 8px;
-`;
-
-const QuestionSection = ({ currentNo }) => (
-	<QuestionSectionWrapper>
-		<PageLabel>
-			<span>{QUIZZES[currentNo].id}</span>/{QUIZZES.length}
-		</PageLabel>
-		<QuestionTitle>{QUIZZES[currentNo].question}</QuestionTitle>
-	</QuestionSectionWrapper>
-);
-export default QuestionSection;
-```
-
-`QuestionSectionWrapper`, `PageLabel`, `QuestionTitle` 컴포넌트를 styled component로 새로이 만들어 주었습니다. 뿐만 아니라 `currentNo` 값이 필요하기 때문에 `props`를 통해 `currentNo`를 받도록 코드를 추가하였습니다.
-
-```jsx
-// App.js
-import React, { useState } from "react";
-import { QUIZZES } from "../constants";
-import { ThemeProvider } from "styled-components";
-import theme from "../theme";
-import Container from "./Container";
-import AnswerGroup from "./AnswerGroup";
-import QuestionSection from "./QuestionSection";
-import "../App.css";
-
-function App() {
-	const [currentNo, setCurrentNo] = useState(0);
-	const [showResult, setShowResult] = useState(false);
-	const [score, setScore] = useState(0);
-
-	const handleClick = (isCorrect) => {
-		if (isCorrect) {
-			setScore((score) => score + 1);
-		}
-		// 마지막 퀴즈인지 체크하기
-		if (currentNo === QUIZZES.length - 1) {
-			setShowResult(true);
-		} else {
-			setCurrentNo((currentNo) => currentNo + 1);
-		}
-	};
-	const convertedScore = Math.floor((score / QUIZZES.length) * 100);
-
-	return (
-		<ThemeProvider theme={theme}>
-			{showResult ? (
-				<Container>
-					<h1 className="result-header">당신의 점수는?</h1>
-					<p className="result-score">{convertedScore}</p>
-				</Container>
-			) : (
-				<Container>
-					<QuestionSection currentNo={currentNo} />
-					<AnswerGroup currentNo={currentNo} handleClick={handleClick} />
-				</Container>
-			)}
-		</ThemeProvider>
-	);
-}
-
-export default App;
-```
-
-`App.js` 에서는 기존의 코드를 `QuestionSection` 컴포넌트로 변경해 주었습니다.
-
-## ResultSection 컴포넌트 만들기
-
-아래와 같이 `ResultSection` 폴더를 하나 만들고 `index.js`를 아래와 같이 하나 만듭니다.
-
-```jsx
-import React from "react";
-import styled from "styled-components";
-
-const Title = styled.h1`
-	font-size: 64px;
-	font-weight: bold;
-	margin-bottom: 8px;
-	text-align: center;
-`;
-
-const Score = styled.p`
-	font-size: 192px;
-	margin: 40px;
-	text-align: center;
-	color: ${(props) => props.theme.primaryColor100};
-`;
-
-const ResultSection = ({ convertedScore }) => (
-	<>
-		<ResultTitle>당신의 점수는?</ResultTitle>
-		<Score>{convertedScore}</Score>
-	</>
-);
-export default ResultSection;
-```
-
-앞에서 해왔던 방식과 비슷하게 진행하였고, 특이한 점은 `color`의 경우 `Button` 컴포넌트를 만들 때처럼 `theme`에서 컬러를 받아왔다는 점입니다.
-
-```jsx
-// App.js
-import React, { useState } from "react";
-import { QUIZZES } from "../constants";
-import "../App.css";
-import { ThemeProvider } from "styled-components";
-import theme from "../theme";
-import Container from "./Container";
-import AnswerGroup from "./AnswerGroup";
-import QuestionSection from "./QuestionSection";
-import ResultSection from "./ResultSection";
-
-function App() {
-	const [currentNo, setCurrentNo] = useState(0);
-	const [showResult, setShowResult] = useState(false);
-	const [score, setScore] = useState(0);
-
-	const handleClick = (isCorrect) => {
-		if (isCorrect) {
-			setScore((score) => score + 1);
-		}
-		// 마지막 퀴즈인지 체크하기
-		if (currentNo === QUIZZES.length - 1) {
-			setShowResult(true);
-		} else {
-			setCurrentNo((currentNo) => currentNo + 1);
-		}
-	};
-	const convertedScore = Math.floor((score / QUIZZES.length) * 100);
-
-	return (
-		<ThemeProvider theme={theme}>
-			{showResult ? (
-				<Container>
-					<ResultSection convertedScore={convertedScore}></ResultSection>
-				</Container>
-			) : (
-				<Container>
-					<QuestionSection currentNo={currentNo} />
-					<AnswerGroup currentNo={currentNo} handleClick={handleClick} />
-				</Container>
-			)}
-		</ThemeProvider>
-	);
-}
-
-export default App;
-```
-
-`App.js` 에서는 기존의 코드를 `ResultSection` 컴포넌트로 변경해 주었습니다.
-
-## App.css 삭제하기
-
-모든 컴포넌트를 다 분리했기 때문에 이제는 더이상 `App.css` 의 스타일이 필요 없습니다.
-
-그래서 다 지우려고 했는데, 전체 `body` 태그에 걸려있는 폰트가 하나 남았습니다.
-
-```jsx
-// App.css
-body {
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-		"Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-		sans-serif;
-}
-```
-
-그럴 때는 `styled component`의 `globalStyle`을 활용하면 됩니다.
-
-### globalStyle 적용하기
-
-src 아래에 `globalStyle` 파일을 하나 생성합니다.
-
-```jsx
-//globalStyle.js
-
-import { createGlobalStyle } from "styled-components";
-
-const GlobalStyle = createGlobalStyle`
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-		"Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-		sans-serif;
-  }
-`;
-
-export default GlobalStyle;
-```
-
-`createGlobalStyle` 안에 우리가 적용하고자 하는 `style`을 추가해 줍니다. 그렇게 만든 `GlobalStyle`을 외부로 내보내 줍니다.
-
-```jsx
-// App.js
-...
-import GlobalStyle from "../globalStyle";
-
-function App() {
-	...
-	return (
-		<ThemeProvider theme={theme}>
-			<GlobalStyle />
-			...
-		</ThemeProvider>
-	);
-}
-
-export default App;
-```
-
-그리고 `GlobalStyle` 컴포넌트를 `import`하고, `ThemeProvider` 안쪽에서 컴포넌트를 추가 해줍니다.
-
-이제 모든 CSS 스타일을 다 옮겼으니, `App.css` 파일도 삭제하고, `App.css` `import` 코드도 마찬가지로 삭제합니다. 그리고 `App`을 재시작합니다.
-
-![2-13.png](./assets/2-13.png)
-
-정상적으로 코드가 작동하는 것을 알 수 있습니다!!
-
-이로써 CSS에서 styled-component로의 기나긴 여정이 끝났습니다 👏👏👏👏
+`CSS in Javascript`이 좋으냐, `SASS`와 같은 `CSS in CSS` 방식이 좋으냐에 대해서는 아직도 여러 논의들이 있습니다. 저희 과정에서는 `Styled-Component`를 사용하지만 여러 기술들을 사용해 보시고, 본인에 가장 편한 방식으로 쓰는 것을 추천 드립니다.
 
 ## 전체 코드 살펴보기
 
-- 깃허브에서 전체 코드 보기 -> [바로가기](https://github.com/CodePotStudio/starter-quiz-app/tree/week03-04)
+- 깃허브에서 전체 코드 보기 -> [바로가기](https://github.com/CodePotStudio/starter-quiz-app/tree/week03-03)
 
 ## Somthing More!!!
 
 반드시 공부해야 하는 건 아니지만, 도움이 될 만한 자료들을 공유하고 있습니다.
 
-- Atomic Design으로 컴포넌트 구성하기 ([링크](https://ui.toast.com/weekly-pick/ko_20200213))
-- Atomic Design으로 Todo List 만들기 ([링크](https://velog.io/@thsoon/%EC%93%B8%EB%95%8C%EC%97%86%EC%9D%B4-%EA%B3%A0%ED%80%84%EC%9D%B8-%ED%88%AC%EB%91%90%EB%A6%AC%EC%8A%A4%ED%8A%B8-%EB%A7%8C%EB%93%A4%EA%B8%B0-FE-2.-%EB%B7%B0-%EC%84%A4%EA%B3%84))
+- Javascript template literal에 대해서 더 알아보기 ([링크](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Template_literals))
+- CSS-in-JS, CSS-in-CSS에 대해서 더 알아보기 ([링크](https://blueshw.github.io/2020/09/14/why-css-in-css/))

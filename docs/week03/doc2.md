@@ -11,11 +11,13 @@ id: doc2
 우선 앞으로 컴포넌트는 `components` 폴더 내에서 작성을 할 것이기 때문에, `components` 폴더를 `src` 내부에 하나 만들어 주도록 하겠습니다. 그리고 `App.js` 파일을 드래그하여 `components` 안으로 옮겨주세요.
 
 ![2-01.png](./assets/2-01.png)
+
 `App.js`의 경로가 이전 됨에 따라 `App.js` 내에서 사용하던 모듈 혹은 `App.js`를 호출하는 모듈의 경로를 바꿔 주어야 합니다.
 
 ```jsx
 // App.js
 // 상위 폴더에 App.css가 존재하므로 .를 하나 더 추가
+...
 import "../App.css";
 ...
 ```
@@ -23,6 +25,7 @@ import "../App.css";
 ```jsx
 // index.js
 // components 폴더 안에 App이 존재하므로 /components/를 추가
+...
 import App from './components/App';
 ...
 ```
@@ -104,7 +107,7 @@ const Button = (props) => {
 export default Button;
 ```
 
-`Button` 컴포넌트에 속성으로 넘겨준 값들은 모두 `props` 안에 보관됩니다. 위와 같이 `Button` 컴포넌트 사용할 때 `name`을 넣어 주었으므로, `props`에서 해당하는 속성(`name`)을 불러와 추가해 주었습니다.
+`Button` 컴포넌트에 속성으로 넘겨준 값들은 모두 `props` 안에 보관됩니다. 위와 같이 `Button` 컴포넌트 사용할 때 `text`을 넣어 주었으므로, `props`에서 해당하는 속성(`text`)을 불러와 추가해 주었습니다.
 
 그럼 다시 `App.js`를 수정해 보도록 하겠습니다.
 
@@ -147,9 +150,8 @@ import Button from "./Button";
 						{QUIZZES[currentNo].answers.map((answer) => (
 							<Button
 								text={answer.text}
-                onClick={() => handleClick(answer.isCorrect)}
-							>
-							</Button>
+								onClick={() => handleClick(answer.isCorrect)}
+							/>
 						))}
 </div>
 ...

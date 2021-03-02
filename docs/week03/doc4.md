@@ -196,7 +196,7 @@ const StyledButton = styled.button`
 `;
 
 const Button = (props) => (
-	<StyledButton onClick={props.onClick} size="big">
+	<StyledButton onClick={props.onClick} fontSize="big">
 		{props.text}
 	</StyledButton>
 );

@@ -42,3 +42,5 @@ id: doc6
   그리고 저에게 알려주시면 코드 리뷰를 해드리도록 하겠습니다.
 
   참고 자료 → [https://react.vlpt.us/using-typescript/02-ts-react-basic.html](https://react.vlpt.us/using-typescript/02-ts-react-basic.html)
+
+  전체 코드 (typescript version) -> [https://github.com/CodePotStudio/starter-quiz-app-typescript](https://github.com/CodePotStudio/starter-quiz-app-typescript)

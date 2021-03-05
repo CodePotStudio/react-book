@@ -1,5 +1,6 @@
 module.exports = {
 	someSidebar: {
+		"Code Pot": ["codepot/intro", "codepot/curriculum"],
 		"간단한 퀴즈 앱 만들기 (1주차)": [
 			"week01/doc1",
 			"week01/doc2",

@@ -16,6 +16,7 @@ slug: /
 ### Single Page Application
 
 ![spa](./assets/1-01.png)
+
 위 그림에서 볼 수 있듯이, 전통적인 웹페이지는 각 `url`로 `HTML` 요청을 보내면 새로운 `HTML`을 클라이언트에게 내려 줬습니다. 이에 반해 `single page application`의 경우, 최초에 페이지에 접근할 때 모든 `HTML`과 `javscript`를 다 내려 받고, `url`에 따라 필요한 부분만 업데이트를 해주는 구조입니다. 이로 인해서 서버를 거치지 않아도 되며, 빠르게 페이지 로딩을 해줄 수 있는 장점이 있습니다.
 
 :::note 클라이언트란?

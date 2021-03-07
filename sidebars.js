@@ -29,5 +29,6 @@ module.exports = {
 			"week03/doc5",
 			"week03/doc6",
 		],
+		"페이지 나누기 (4주차)": ["week04/doc1"],
 	},
 };

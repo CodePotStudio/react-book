@@ -35,44 +35,6 @@ return showResult ? (
 
 이 부분을 `Result` Component로 옮겨 보도록 하겠습니다.
 
-Quiz 컴포넌트를 아래와 같이 변경 해주세요.
-
-```jsx
-// page/Quiz/index.js
-import { useState } from "react";
-import AnswerGroup from "../../components/AnswerGroup";
-import Container from "../../components/Container";
-import QuestionSection from "../../components/QuestionSection";
-import { QUIZZES } from "../../constants";
-
-const Quiz = () => {
-	const [currentNo, setCurrentNo] = useState(0);
-	const [score, setScore] = useState(0);
-
-	const handleClick = (isCorrect) => {
-		if (isCorrect) {
-			setScore((score) => score + 1);
-		}
-		// 마지막 퀴즈인지 체크하기
-		if (currentNo === QUIZZES.length - 1) {
-		} else {
-			setCurrentNo((currentNo) => currentNo + 1);
-		}
-	};
-
-	return (
-		<Container>
-			<QuestionSection currentNo={currentNo} />
-			<AnswerGroup currentNo={currentNo} handleClick={handleClick} />
-		</Container>
-	);
-};
-export default Quiz;
-```
-
-- `App.js` 변경된 내용
-  - Result 컴포넌트에 해당하는 코드 지우기
-
 ## Result 컴포넌트 만들기
 
 `Pages` 폴더 내에 `Result` 폴더를 만들고, `index.js`를 아래와 같이 만들어 줍니다.
@@ -129,6 +91,47 @@ export default App;
 ![4-7.png](assets/4-7.png)
 
 정상적으로 렌더링이 되는 것을 확인 할 수 있습니다!!
+
+## Quiz 컴포넌트 불필요한 코드 삭제하기
+
+Quiz 컴포넌트를 아래와 같이 변경 해주세요.
+
+```jsx
+// page/Quiz/index.js
+import { useState } from "react";
+import AnswerGroup from "../../components/AnswerGroup";
+import Container from "../../components/Container";
+import QuestionSection from "../../components/QuestionSection";
+import { QUIZZES } from "../../constants";
+
+const Quiz = () => {
+	const [currentNo, setCurrentNo] = useState(0);
+	const [score, setScore] = useState(0);
+
+	const handleClick = (isCorrect) => {
+		if (isCorrect) {
+			setScore((score) => score + 1);
+		}
+		// 마지막 퀴즈인지 체크하기
+		if (currentNo === QUIZZES.length - 1) {
+		} else {
+			setCurrentNo((currentNo) => currentNo + 1);
+		}
+	};
+
+	return (
+		<Container>
+			<QuestionSection currentNo={currentNo} />
+			<AnswerGroup currentNo={currentNo} handleClick={handleClick} />
+		</Container>
+	);
+};
+export default Quiz;
+```
+
+- `App.js` 변경된 내용
+  - `showResult` state 삭제
+  - Result 컴포넌트에 해당하는 코드 지우기
 
 ## 전체 코드 살펴보기
 

@@ -116,7 +116,7 @@ a태그의 기본적인 속성은 **페이지를 이동시키면서 페이지 �
 
 ```jsx
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 // Home, MyPage, About 컴포넌트 생성
 const Home = () => <div>Home</div>;

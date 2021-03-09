@@ -19,11 +19,11 @@ id: doc2
 ```jsx
 // pages/Quiz/index.js
 import { useState } from "react";
-import AnswerGroup from "../components/AnswerGroup";
-import Container from "../components/Container";
-import QuestionSection from "../components/QuestionSection";
-import ResultSection from "../components/ResultSection";
-import { QUIZZES } from "../constants";
+import AnswerGroup from "../../components/AnswerGroup";
+import Container from "../../components/Container";
+import QuestionSection from "../../components/QuestionSection";
+import ResultSection from "../../components/ResultSection";
+import { QUIZZES } from "../../constants";
 
 const Quiz = () => {
 	const [currentNo, setCurrentNo] = useState(0);

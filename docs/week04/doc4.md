@@ -104,7 +104,7 @@ export default Result;
 ```jsx
 // App.js
 
-import Landing from "../pages/Landing";
+import Result from "../pages/Result";
 
 function App() {
 	return (

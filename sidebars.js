@@ -39,6 +39,6 @@ module.exports = {
 			"week04/doc7",
 			"week04/doc8",
 		],
-		"결과 페이지 업그레이드하기 (5주차)": ["week05/doc1"],
+		"결과 페이지 업그레이드하기 (5주차)": ["week05/doc1", "week05/doc2"],
 	},
 };

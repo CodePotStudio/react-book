@@ -1,6 +1,6 @@
 ---
-title: 5주차 수업자료 셋팅하기
-sidebar_label: 5주차 수업자료 셋팅하기
+title: 수업자료 준비하기
+sidebar_label: 수업자료 준비하기
 id: doc1
 ---
 

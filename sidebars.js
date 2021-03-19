@@ -1,6 +1,6 @@
 module.exports = {
 	someSidebar: {
-		"code pot,": ["codepot/intro", "codepot/curriculum"],
+		"강의 소개": ["codepot/intro", "codepot/curriculum"],
 		"간단한 퀴즈 앱 만들기 (1주차)": [
 			"week01/doc1",
 			"week01/doc2",
@@ -39,5 +39,6 @@ module.exports = {
 			"week04/doc7",
 			"week04/doc8",
 		],
+		"결과 페이지 업그레이드하기 (5주차)": ["week05/doc1"],
 	},
 };

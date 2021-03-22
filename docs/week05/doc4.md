@@ -199,10 +199,10 @@ const Spinner = () => {
 		<Flex>
 			<ScaleLoader
 				size={100}
-				height="160"
-				width="32"
+				height="160px"
+				width="32px"
 				color="#7362ff"
-				radius="8"
+				radius="8px"
 			/>
 		</Flex>
 	);
@@ -228,10 +228,10 @@ const Spinner = () => {
 	return (
 		<Flex>
 			<ScaleLoader
-				height="160"
-				width="32"
+				height="160px"
+				width="32px"
 				color="#7362ff"
-				radius="8"
+				radius="8px"
 			/>
 		</Flex>
 	);

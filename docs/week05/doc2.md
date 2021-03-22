@@ -1,6 +1,6 @@
 ---
-title: 코드 리팩토링
-sidebar_label: 코드 리팩토링
+title: 코드 리팩토링 part1
+sidebar_label: 코드 리팩토링 part1
 id: doc2
 ---
 

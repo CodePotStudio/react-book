@@ -44,6 +44,7 @@ module.exports = {
 			"week05/doc2",
 			"week05/doc3",
 			"week05/doc4",
+			"week05/doc5",
 		],
 	},
 };

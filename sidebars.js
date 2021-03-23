@@ -39,13 +39,14 @@ module.exports = {
 			"week04/doc7",
 			"week04/doc8",
 		],
-		"결과 페이지 업그레이드하기 (5주차)": [
+		"로딩 페이지 만들기 (5주차)": [
 			"week05/doc1",
 			"week05/doc2",
 			"week05/doc3",
 			"week05/doc4",
 			"week05/doc5",
 			"week05/doc6",
+			"week05/doc7",
 		],
 	},
 };

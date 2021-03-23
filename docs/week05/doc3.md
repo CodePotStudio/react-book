@@ -55,7 +55,7 @@ export default Button;
 
 `props`에서 비구조 할당으로 `to`, `onClick`, `chlidren`을 꺼내왔습니다. 그리고 삼항 연산자로 `to Props`가 있는 경우, `StyledLink`로 감싸주고, 없는 경우 `StyledButton`을 그대로 `return` 하도록 컴포넌트를 변경했습니다.
 
-### Button 컴포넌트 전체 코드
+**Button 컴포넌트 전체 코드**
 
 ```jsx
 // components/Button/index.js

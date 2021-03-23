@@ -74,7 +74,7 @@ export { default as AnswerGroup } from "components/AnswerGroup";
 export { default as Button } from "components/Button";
 export { default as Container } from "components/Container";
 export { default as QuestionSection } from "components/QuestionSection";
-export { default as ResutSection } from "components/ResutSection";
+export { default as ResultSection } from "components/ResultSection";
 ```
 
 위 코드는 `from`으로부터 `default` 값을 가져와 `as` 값으로 외부로 내보내는 코드입니다.

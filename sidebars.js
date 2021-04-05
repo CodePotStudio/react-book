@@ -59,11 +59,12 @@ module.exports = {
 			"week06/doc8",
 			"week06/doc9",
 		],
-		"메타데이터 추가하고 배포하기(7주차)": [
+		"메타데이터 추가하기(7주차)": [
 			"week07/doc0",
 			"week07/doc1",
 			"week07/doc2",
 			"week07/doc3",
+			"week07/doc4",
 		],
 	},
 };

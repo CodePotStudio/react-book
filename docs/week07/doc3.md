@@ -31,6 +31,7 @@ import elon from "assets/images/elon.jpg";
 
 function App() {
 	...
+	const currentUrl = document.location.href;
 	return (
 		<ThemeProvider theme={theme}>
 			<Helmet>

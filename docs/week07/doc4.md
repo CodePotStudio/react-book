@@ -20,7 +20,7 @@ netlify의 최초 설정은 / 로 들어왔을 때, `index.html`을 내려주는
 
 ## netlify Redirect 조건 설정하기
 
-public 폴더 내에 \_redirects 파일을 하나 만듭니다. 확장자 없이 \_redirects입니다.
+`public` 폴더 내에 `\_redirects` 파일을 하나 만듭니다. 확장자 없이 `\_redirects`입니다.
 
 그리고 아래의 코드를 저장합니다.
 

@@ -69,5 +69,9 @@ module.exports = {
 			"week07/doc6",
 			"week07/doc7",
 		],
+		"추가로 공부하면 좋은 것들": [
+			"additionalMaterial/doc0",
+			"additionalMaterial/doc1",
+		],
 	},
 };

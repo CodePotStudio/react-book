@@ -69,6 +69,7 @@ module.exports = {
 			"week07/doc6",
 			"week07/doc7",
 		],
+		"성향 테스트 수익화하기(8주차)": ["week08/doc1", "week08/doc2"],
 		"추가로 공부하면 좋은 것들": [
 			"additionalMaterial/doc0",
 			"additionalMaterial/doc1",

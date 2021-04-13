@@ -73,6 +73,7 @@ module.exports = {
 		"추가로 공부하면 좋은 것들": [
 			"additionalMaterial/doc0",
 			"additionalMaterial/doc1",
+			"additionalMaterial/doc2",
 		],
 	},
 };
